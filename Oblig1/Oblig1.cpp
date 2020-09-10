@@ -10,7 +10,7 @@ const char placeOriginal[9] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };		
 char place[9] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };					//the board used in play
 
 bool gameWon = false;
-bool p1Turn = true;
+bool p1Turn = true;		//true = p1's turn, false = p2's turn.
 
 int isTie{0};
 
@@ -21,9 +21,14 @@ void calculateTie() {
 	for (int i = 0; i < 10; i++) 
 	{
 		if (place[i] == placeOriginal[i]) {
+			std::cout << place[i] << "  " << placeOriginal[i];
+			std::cout << "\nIS THE SAME";
+			system("pause");
 			break;
 		}
-		isTie = 1;
+		else {
+			//isTie = 1;
+		}
 	}
 	
 }
@@ -35,10 +40,12 @@ void resetGame()
 	}
 	gameWon = false;
 	p1Turn = true;
+	isTie = 0;
 }
 
 bool calculateWin(char p)
 {
+
 	//Horizontal Wins
 	if (place[0] == p && place[1] == p && place[2] == p) 
 		return true;
@@ -61,7 +68,7 @@ bool calculateWin(char p)
 	if (place[2] == p && place[4] == p && place[6] == p)
 		return true;
 	
-	return false;
+	return false();
 }
 
 void printBoard() {
