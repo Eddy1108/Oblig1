@@ -12,26 +12,11 @@ char place[9] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };					//the board
 bool gameWon = false;
 bool p1Turn = true;		//true = p1's turn, false = p2's turn.
 
-int isTie{0};
+int roundCount{ 0 };
 
 char playAgain = ' ';
 char playerChoice = ' ';
 
-void calculateTie() {
-	for (int i = 0; i < 10; i++) 
-	{
-		if (place[i] == placeOriginal[i]) {
-			std::cout << place[i] << "  " << placeOriginal[i];
-			std::cout << "\nIS THE SAME";
-			system("pause");
-			break;
-		}
-		else {
-			//isTie = 1;
-		}
-	}
-	
-}
 
 void resetGame()
 {
@@ -40,7 +25,7 @@ void resetGame()
 	}
 	gameWon = false;
 	p1Turn = true;
-	isTie = 0;
+	roundCount = 0;
 }
 
 bool calculateWin(char p)
@@ -68,6 +53,8 @@ bool calculateWin(char p)
 	if (place[2] == p && place[4] == p && place[6] == p)
 		return true;
 	
+	roundCount++;
+
 	return false();
 }
 
@@ -123,16 +110,19 @@ int main()
 		{
 			system("cls");
 			std::cout << "****** Welcome to Tic Tac Toe! ******\n";
-			printBoard();												//Prints the board each turn
-			std::cout << "tie? : " << isTie;
+			printBoard();											//Prints the board each turn
+			std::cout << roundCount;
+			if (roundCount >= 9)
+			{
+				gameWon = true;
+				break;
+			}
 
 			if (p1Turn) {
 				std::cout << "\nPlayer 1, Write a number from 1 to 9: ";
 				playerChoice = _getch();
 				editBoard(playerChoice, p1Turn);						//Replaces the values on the board the player chose.
 				gameWon = calculateWin('X');
-				calculateTie();
-
 			}
 			else
 			{
@@ -146,12 +136,17 @@ int main()
 		//Post-game
 		system("cls");
 		printBoard();
-		if (p1Turn == false) {
+		if (p1Turn == false && roundCount <=8) {		//p1Turn is flipped for this part.
 			std::cout << "\n\nPlayer 1 wins!";
 		}
-		else
+		else if(p1Turn == true && roundCount <= 8)
 		{
 			std::cout << "\n\nPlayer 2 wins!";
+		}
+
+		if (roundCount >= 9) 
+		{
+			std::cout << "\n\nIts a Tie!";
 		}
 
 		std::cout << "\n\nWould you like to play again? (Y/N)   \n";
@@ -164,7 +159,6 @@ int main()
 		system("pause");
 	}
 }
-
 
 
 //Add it so game can have a tie condition
