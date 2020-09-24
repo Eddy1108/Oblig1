@@ -15,13 +15,13 @@ bool p1Turn = true;		//true = p1's turn, false = p2's turn.
 int roundCount{ 0 };
 
 char playAgain = ' ';
-char playerChoice = ' ';
+char playerChoice = ' ';			//Stores which spot on the board the player wants to claim
 
 
 void resetGame()
 {
 	for (int i = 0; i < 9; i++) {
-		place[i] = placeOriginal[i];
+		place[i] = placeOriginal[i];		//Replaces the edited board with a copy of the clean board.
 	}
 	gameWon = false;
 	p1Turn = true;
@@ -55,7 +55,7 @@ bool calculateWin(char p)
 	
 	roundCount++;
 
-	return false();
+	return false;
 }
 
 void printBoard() {
@@ -82,20 +82,20 @@ void printBoard() {
 
 void editBoard(char p, bool p1TurnCheck) 
 {
-	int pInt = p - '0';		//Convert the char to int so that it is actually usefull.
+	int pInt = p - '0';		//Convert the char (playerChoice) to int so that it is actually usefull.
 
 	if (pInt < 10)
 	{
 
-		if (p1TurnCheck) {
-			if (place[pInt - 1] != 'X' && place[pInt - 1] != 'O') {
+		if (p1TurnCheck) {	//if its player 1s turn
+			if (place[pInt - 1] != 'X' && place[pInt - 1] != 'O') {		//Checks if there is already an X or O in the selected spot
 				place[pInt - 1] = 'X';
 				p1Turn = false;
 			}
 		}
 		else
 		{
-			if (place[pInt - 1] != 'X' && place[pInt - 1] != 'O') {
+			if (place[pInt - 1] != 'X' && place[pInt - 1] != 'O') {		
 				place[pInt - 1] = 'O';
 				p1Turn = true;
 			}
@@ -106,6 +106,7 @@ void editBoard(char p, bool p1TurnCheck)
 int main()
 {
 	while (true){
+
 		while (gameWon == false)	//This is where the game happens
 		{
 			system("cls");
@@ -136,7 +137,8 @@ int main()
 		//Post-game
 		system("cls");
 		printBoard();
-		if (p1Turn == false && roundCount <=8) {		//p1Turn is flipped for this part.
+		//Print the results!
+		if (p1Turn == false && roundCount <= 8) {		//p1Turn is flipped for this part. false == p1, true == p2
 			std::cout << "\n\nPlayer 1 wins!";
 		}
 		else if(p1Turn == true && roundCount <= 8)
@@ -153,12 +155,9 @@ int main()
 		playAgain = _getch();
 		if (playAgain == 'N' || playAgain == 'n') 
 		{
-			return 0;
+			return 0;		//Ends the program
 		}
 		resetGame();
 		system("pause");
 	}
 }
-
-
-//Add it so game can have a tie condition
