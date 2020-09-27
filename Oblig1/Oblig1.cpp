@@ -75,7 +75,7 @@ void printBoard() {
 		std::cout << "\n";
 		for (int j = 0; j < 16; j++)
 		{
-				std::cout << board[i][j];
+			std::cout << board[i][j];
 		}
 	}
 }
@@ -112,7 +112,6 @@ int main()
 			system("cls");
 			std::cout << "****** Welcome to Tic Tac Toe! ******\n";
 			printBoard();											//Prints the board each turn
-			std::cout << roundCount;
 			if (roundCount >= 9)
 			{
 				gameWon = true;
